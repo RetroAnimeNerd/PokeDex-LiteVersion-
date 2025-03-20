@@ -17,7 +17,7 @@ def getPokemonEntry(pokemon_name):
     height = data['height']
     weight = data['weight']
     primaryType = data['types'][0]['type']['name'].capitalize()
-    imageData = data['sprites']['front_shiny']
+    imageData = data['sprites']['front_default']
 
 # Not all pokemon have secondary types. Using try catch to check first
     try:
