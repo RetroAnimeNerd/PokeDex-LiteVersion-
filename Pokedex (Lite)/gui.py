@@ -31,7 +31,7 @@ def show_frame(frame):
 # Tkinter setup
 root = tk.Tk()
 root.title("PokeDex Lite")
-root.geometry("500x500")
+root.geometry("600x500")
 
 # Configure grid layout to center frames
 root.columnconfigure(0, weight=1)
@@ -62,11 +62,14 @@ pokedex_container.pack(expand=True)
 btn_return = tk.Button(pokedex_container, text="Return to Main Menu", command=lambda: show_frame(main_frame))
 btn_return.pack(pady=5)
 
-label_0 = tk.Label(pokedex_container, text="Enter a Pokémon name...", font=("Arial", 12))
+label_box = tk.Frame(pokedex_container)
+label_box.pack(pady=5)
+
+label_0 = tk.Label(pokedex_container, text="Enter a Pokémon name...", font=("Arial", 14))
 label_0.pack(pady=5)
 
 label_1 = tk.Label(pokedex_container)  # Image label
-label_1.pack(pady=5)
+label_1.pack()
 
 label_2 = tk.Label(pokedex_container, font=("Arial", 14))
 label_2.pack(pady=5)
