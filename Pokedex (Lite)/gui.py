@@ -105,6 +105,8 @@ entry.pack()
 btn_submit = tk.Button(pokedex_container, text="Submit", command=runScript)
 btn_submit.pack()
 
+entry.bind('<Return>', lambda event: runScript())
+
 
 
 

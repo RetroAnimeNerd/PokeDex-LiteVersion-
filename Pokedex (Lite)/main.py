@@ -75,17 +75,16 @@ def getPokemonEntry(pokemon_name):
 
 
 
-def checkTypeAdvantage(pokemonType):
+def checkTypeAdvantage(pokemonPrimaryType):
     
-    if pokemonType in type_advantage:
-        advantage = f"This pokemon is strong against {type_advantage[pokemonType]} type pokemon"
+    if pokemonPrimaryType in type_advantage:
+        advantage = f"This pokemon is strong against {type_advantage[pokemonPrimaryType]} type pokemon"
     else:
-        advantage = f"{pokemonType} pokemon Type Not Found"
-        
-    if pokemonType in type_disadvantage:
-        disadvantage = f"This pokemon is weakest against {type_disadvantage[pokemonType]} type pokemon"
+        advantage = f"{pokemonPrimaryType} pokemon Type Not Found"     
+    if pokemonPrimaryType in type_disadvantage:
+        disadvantage = f"This pokemon is weakest against {type_disadvantage[pokemonPrimaryType]} type pokemon"  
     else: 
-        disadvantage = f"{pokemonType} pokemon type Not Found"
+        disadvantage = f"{pokemonPrimaryType} pokemon type Not Found"
 
     return advantage, disadvantage
 
@@ -100,12 +99,11 @@ def comparePokemon(Pokemon1, Pokemon2):
     if f_id == s_id:
         typeAdvantageResults = f"These pokemon are the same do not piss me off!"
         return f_pokemonString, s_pokemonString, typeAdvantageResults
-    
     else:
         if f_primaryType in type_disadvantage[s_primaryType]:
-            typeAdvantageResults = f"{f_name} is strong against {s_name}"
-        if f_primaryType in type_advantage[s_primaryType]:
-            typeAdvantageResults = f"{s_name} is strong against {f_name}"
+            typeAdvantageResults = f"{f_name} has a type advantage against {s_name}"
+        elif f_primaryType in type_advantage[s_primaryType]:
+            typeAdvantageResults = f"{s_name} has a type advantage against {f_name}"
         else:
             typeAdvantageResults = f"No distinct type advantage between {f_name} and {s_name}"
             
