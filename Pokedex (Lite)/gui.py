@@ -12,18 +12,26 @@ def loadImage(image_src):
 
 # Functions 
 def runScript():
-    pokemon_name = entry.get()
-    pokemon_name, pokemon_id, height, weight, primaryType, secondaryType, imageData = m.getPokemonEntry(pokemon_name)
-    advantage, disadvantage = m.checkTypeAdvantage(str(primaryType))
-    photo = loadImage(imageData)
+    try: 
+        pokemon_name = entry.get()
+        pokemon_name, pokemon_id, height, weight, primaryType, secondaryType, imageData = m.getPokemonEntry(pokemon_name)
+        advantage, disadvantage = m.checkTypeAdvantage(primaryType, secondaryType)
+        photo = loadImage(imageData)
 
-    global tk_img
-    tk_img = ImageTk.PhotoImage(photo)
+        global tk_img
+        tk_img = ImageTk.PhotoImage(photo)
 
-    label_0.config(text=f"-------Pokedex Entry------\nPokeDex ID: {pokemon_id}\nPokemon Name: {pokemon_name}\nHeight: {height} inches\nWeight: {weight} pounds(lb)\nPrimary Type: {primaryType}\nSecondary Type: {secondaryType}\n", font=("Arial", 14))
-    label_1.config(image=tk_img)
-    label_2.config(text=advantage)
-    label_3.config(text=disadvantage)
+        label_0.config(text=f"-------Pokedex Entry------\nPokeDex ID: {pokemon_id}\nPokemon Name: {pokemon_name}\nHeight: {height} inches\nWeight: {weight} pounds(lb)\nPrimary Type: {primaryType}\nSecondary Type: {secondaryType}\n", font=("Arial", 14))
+        label_1.config(image=tk_img)
+        label_2.config(text=advantage)
+        label_3.config(text=disadvantage)
+
+    except UnboundLocalError:
+        label_0.config(text=f"{pokemon_name} not found, please try again...")
+        label_1.config(image="")
+        label_2.config(text="")
+        label_3.config(text="")
+
 
 def show_frame(frame):
     frame.tkraise()
@@ -32,10 +40,7 @@ def compareThesePokemon():
     firstPokemon = firstPokemonEntry.get()
     secondPokemon = secondPokemonEntry.get()
 
-
-
     first, second, comparison_result = m.comparePokemon(firstPokemon, secondPokemon)
-
 
     firstPokemonResults.config(text=first)
     secondPokemonResults.config(text=second)

@@ -75,18 +75,52 @@ def getPokemonEntry(pokemon_name):
 
 
 
-def checkTypeAdvantage(pokemonPrimaryType):
+def checkTypeAdvantage(pokemonPrimaryType, pokemonSecondaryType):
+
+    advantageList = []
+    disadvantageList = []
+    a_string = ""
+    d_string = ""
+
+    a_count = 0
+    d_count = 0
+
+    if pokemonPrimaryType or pokemonSecondaryType in type_disadvantage:
+        for pokeType in type_disadvantage[pokemonPrimaryType]:
+            disadvantageList.append(pokeType)
+        for pokeType in type_disadvantage[pokemonSecondaryType]:
+            disadvantageList.append(pokeType)
+
+    if pokemonPrimaryType or pokemonSecondaryType in type_advantage:
+        for pokeType in type_advantage[pokemonPrimaryType]:
+            advantageList.append(pokeType)
+        for pokeType in type_advantage[pokemonSecondaryType]:
+            advantageList.append(pokeType)
+
     
-    if pokemonPrimaryType in type_advantage:
-        advantage = f"This pokemon is strong against {type_advantage[pokemonPrimaryType]} type pokemon"
-    else:
-        advantage = f"{pokemonPrimaryType} pokemon Type Not Found"     
-    if pokemonPrimaryType in type_disadvantage:
-        disadvantage = f"This pokemon is weakest against {type_disadvantage[pokemonPrimaryType]} type pokemon"  
-    else: 
-        disadvantage = f"{pokemonPrimaryType} pokemon type Not Found"
+    for a in advantageList:
+        a_lenght = len(advantageList)
+        if a_count == a_lenght - 1:
+            a_string += f" and, {a}"
+        else: 
+            a_count += 1
+            a_string += f"{a}, "
+    advantage = f"This pokemon is strong against {a_string} type pokemon"
+
+
+    for d in disadvantageList:
+        d_lenght = len(disadvantageList)
+        if d_count == d_lenght - 1:
+            d_string += f" and, {d}"
+        else: 
+            d_count += 1
+            d_string += f"{d}, "
+    disadvantage = f"This pokemon is weak against {d_string} type pokemon"
 
     return advantage, disadvantage
+
+
+
 
 def comparePokemon(Pokemon1, Pokemon2):
     f_name, f_id, f_height, f_weight, f_primaryType, f_secondaryType, f_imageData = getPokemonEntry(Pokemon1)
