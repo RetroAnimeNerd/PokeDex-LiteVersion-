@@ -102,9 +102,12 @@ def checkTypeAdvantage(pokemonPrimaryType, pokemonSecondaryType):
 
     
     for a in advantageList:
-        a_lenght = len(advantageList)
-        if a_count == a_lenght - 1:
-            a_string += f" and, {a}"
+        a_length = len(advantageList)
+        if a_length == 1:
+            a_string += f"{a}"
+            break
+        if a_count == a_length - 1 and a_length > 1:
+            a_string += f"and, {a}"
         else: 
             a_count += 1
             a_string += f"{a}, "
@@ -112,12 +115,15 @@ def checkTypeAdvantage(pokemonPrimaryType, pokemonSecondaryType):
 
 
     for d in disadvantageList:
-        d_lenght = len(disadvantageList)
-        if d_count == d_lenght - 1:
-            d_string += f" and, {d}"
-        else: 
-            d_count += 1
+        d_length = len(disadvantageList)
+        if d_length == 1: 
+            d_string += f"{d}"
+            break
+        if d_length > 1 and d_count == d_length - 1:
+            d_string += f"and, {d}"
+        else:
             d_string += f"{d}, "
+            d_count += 1
     disadvantage = f"This pokemon is weak against {d_string} type pokemon"
 
     return advantage, disadvantage
