@@ -21,7 +21,7 @@ def runScript():
         global tk_img
         tk_img = ImageTk.PhotoImage(photo)
 
-        label_0.config(text=f"-------Pokedex Entry------\nPokeDex ID: {pokemon_id}\nPokemon Name: {pokemon_name}\nHeight: {height} inches\nWeight: {weight} pounds(lb)\nPrimary Type: {primaryType}\nSecondary Type: {secondaryType}\n", font=("Arial", 14))
+        label_0.config(text=f"-------Pokedex Entry------\nPokeDex ID: {pokemon_id}\nPokemon Name: {pokemon_name}\nHeight: {height} meters\nWeight: {weight} pounds(lb)\nPrimary Type: {primaryType}\nSecondary Type: {secondaryType}\n", font=("Arial", 14))
         label_1.config(image=tk_img)
         label_2.config(text=advantage)
         label_3.config(text=disadvantage)
@@ -52,7 +52,7 @@ def compareThesePokemon():
 # Tkinter setup
 root = tk.Tk()
 root.title("PokeDex Lite")
-root.geometry("500x500")
+root.geometry("550x500")
 
 # Configure grid layout to center frames
 root.columnconfigure(0, weight=1)

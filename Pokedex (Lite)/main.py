@@ -88,14 +88,17 @@ def checkTypeAdvantage(pokemonPrimaryType, pokemonSecondaryType):
     if pokemonPrimaryType or pokemonSecondaryType in type_disadvantage:
         for pokeType in type_disadvantage[pokemonPrimaryType]:
             disadvantageList.append(pokeType)
-        for pokeType in type_disadvantage[pokemonSecondaryType]:
-            disadvantageList.append(pokeType)
+        if pokemonSecondaryType != 'None':
+            for pokeType in type_disadvantage[pokemonSecondaryType]:
+                disadvantageList.append(pokeType)
 
     if pokemonPrimaryType or pokemonSecondaryType in type_advantage:
         for pokeType in type_advantage[pokemonPrimaryType]:
             advantageList.append(pokeType)
-        for pokeType in type_advantage[pokemonSecondaryType]:
-            advantageList.append(pokeType)
+        
+        if pokemonSecondaryType != 'None': 
+            for pokeType in type_advantage[pokemonSecondaryType]:
+                advantageList.append(pokeType)
 
     
     for a in advantageList:
@@ -126,8 +129,8 @@ def comparePokemon(Pokemon1, Pokemon2):
     f_name, f_id, f_height, f_weight, f_primaryType, f_secondaryType, f_imageData = getPokemonEntry(Pokemon1)
     s_name, s_id, s_height, s_weight, s_primaryType, s_secondaryType, s_imageData = getPokemonEntry(Pokemon2)
 
-    f_pokemonString = f"-------Pokedex Entry------\nPokeDex ID: {f_id}\nPokemon Name: {f_name}\nHeight: {f_height} inches\nWeight: {f_weight} pounds(lb)\nPrimary Type: {f_primaryType}\nSecondary Type: {f_secondaryType}\n"
-    s_pokemonString = f"-------Pokedex Entry------\nPokeDex ID: {s_id}\nPokemon Name: {s_name}\nHeight: {s_height} inches\nWeight: {s_weight} pounds(lb)\nPrimary Type: {s_primaryType}\nSecondary Type: {s_secondaryType}\n"
+    f_pokemonString = f"-------Pokedex Entry------\nPokeDex ID: {f_id}\nPokemon Name: {f_name}\nHeight: {f_height} meters\nWeight: {f_weight} pounds(lb)\nPrimary Type: {f_primaryType}\nSecondary Type: {f_secondaryType}\n"
+    s_pokemonString = f"-------Pokedex Entry------\nPokeDex ID: {s_id}\nPokemon Name: {s_name}\nHeight: {s_height} meters\nWeight: {s_weight} pounds(lb)\nPrimary Type: {s_primaryType}\nSecondary Type: {s_secondaryType}\n"
 
     # Compare the two pokemon
     if f_id == s_id:
