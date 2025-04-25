@@ -20,7 +20,8 @@ type_advantage = {
         "Dragon":{"Dragon"},
         "Dark": {"Psychic", "Ghost"},
         "Steel":{"Ice", "Rock", "Fairy"},
-        "Fairy": {"Fighting", "Dragon", "Dark"}
+        "Fairy": {"Fighting", "Dragon", "Dark"},
+        "None": {}
     }
 
 
@@ -42,11 +43,11 @@ type_disadvantage = {
         "Dragon":{"Ice", "Dragon", "Fairy"},
         "Dark": {"Fighting", "Bug", "Fairy"},
         "Steel":{"Fire", "Fighting", "Ground", },
-        "Fairy": {"Poison", "Steel"}       
+        "Fairy": {"Poison", "Steel"},
+        "None": {}       
     }
 
 
-# Custom function for getting pokemon data....
 def getPokemonEntry(pokemon_name):
     url = f'https://pokeapi.co/api/v2/pokemon/{pokemon_name}'
     response = requests.get(url)
@@ -65,13 +66,24 @@ def getPokemonEntry(pokemon_name):
     primaryType = data['types'][0]['type']['name'].capitalize()
     imageData = data['sprites']['front_default']
 
+    statCount = 0
+    baseStatTotal = 0
+    statString = f"--------Base Stats--------\n"
+
+    for stat in data['stats']:
+        baseStatValue = int(data['stats'][statCount]['base_stat'])
+        baseStatTitle = data['stats'][statCount]['stat']['name'].capitalize()
+        statString += f"{baseStatTitle}: {baseStatValue}\n"
+        baseStatTotal += baseStatValue
+        statCount += 1
+
 # Not all pokemon have secondary types. Using try catch to check first
     try:
         secondaryType = data['types'][1]['type']['name'].capitalize()
     except IndexError:
         secondaryType = 'None'
 
-    return pokemon_name, pokemon_id, height, weight, primaryType, secondaryType, imageData
+    return pokemon_name, pokemon_id, height, weight, primaryType, secondaryType, statString, baseStatTotal, imageData
 
 
 
@@ -132,24 +144,37 @@ def checkTypeAdvantage(pokemonPrimaryType, pokemonSecondaryType):
 
 
 def comparePokemon(Pokemon1, Pokemon2):
-    f_name, f_id, f_height, f_weight, f_primaryType, f_secondaryType, f_imageData = getPokemonEntry(Pokemon1)
-    s_name, s_id, s_height, s_weight, s_primaryType, s_secondaryType, s_imageData = getPokemonEntry(Pokemon2)
+    f_name, f_id, f_height, f_weight, f_primaryType, f_secondaryType, f_statString, f_baseStatTotal,  f_imageData = getPokemonEntry(Pokemon1)
+    s_name, s_id, s_height, s_weight, s_primaryType, s_secondaryType, s_statString, s_baseStatTotal, s_imageData = getPokemonEntry(Pokemon2)
 
-    f_pokemonString = f"-------Pokedex Entry------\nPokeDex ID: {f_id}\nPokemon Name: {f_name}\nHeight: {f_height} meters\nWeight: {f_weight} pounds(lb)\nPrimary Type: {f_primaryType}\nSecondary Type: {f_secondaryType}\n"
-    s_pokemonString = f"-------Pokedex Entry------\nPokeDex ID: {s_id}\nPokemon Name: {s_name}\nHeight: {s_height} meters\nWeight: {s_weight} pounds(lb)\nPrimary Type: {s_primaryType}\nSecondary Type: {s_secondaryType}\n"
+    f_pokemonString = f"-------Pokedex Entry------\nPokeDex ID: {f_id}\nPokemon Name: {f_name}\nHeight: {f_height} meters\nWeight: {f_weight} pounds(lb)\nPrimary Type: {f_primaryType}\nSecondary Type: {f_secondaryType}\n{f_statString}\nBase Total: {f_baseStatTotal}"
+    s_pokemonString = f"-------Pokedex Entry------\nPokeDex ID: {s_id}\nPokemon Name: {s_name}\nHeight: {s_height} meters\nWeight: {s_weight} pounds(lb)\nPrimary Type: {s_primaryType}\nSecondary Type: {s_secondaryType}\n{s_statString}\nBase Total: {s_baseStatTotal}"
 
     # Compare the two pokemon
+    f_hasAdvantage = False
+    s_hasAdvantage = False
+    typeAdvantageResults = ""
+
     if f_id == s_id:
         typeAdvantageResults = f"These pokemon are the same do not piss me off!"
         return f_pokemonString, s_pokemonString, typeAdvantageResults
     else:
-        if f_primaryType in type_disadvantage[s_primaryType]:
-            typeAdvantageResults = f"{f_name} has a type advantage against {s_name}"
-        elif f_primaryType in type_advantage[s_primaryType]:
-            typeAdvantageResults = f"{s_name} has a type advantage against {f_name}"
-        else:
-            typeAdvantageResults = f"No distinct type advantage between {f_name} and {s_name}"
-            
+        if f_primaryType in type_disadvantage[s_primaryType] or f_primaryType in type_disadvantage[s_secondaryType]:
+            f_hasAdvantage = True
+        if f_secondaryType in type_disadvantage[s_primaryType] or f_secondaryType in type_disadvantage[s_secondaryType]:
+            f_hasAdvantage = True                 
+        if s_primaryType in type_disadvantage[f_primaryType] or s_primaryType in type_disadvantage[f_secondaryType]:
+            s_hasAdvantage = True
+        if s_secondaryType in type_disadvantage[f_primaryType] or s_secondaryType in type_disadvantage[f_secondaryType]:
+            s_hasAdvantage = True
+        
+        if f_hasAdvantage == True: 
+            string = f"{f_name} has a type advantage over {s_name}\n"
+            typeAdvantageResults += string
+        if s_hasAdvantage == True:
+            string = f"{s_name} has a type advantage over {f_name}\n"
+            typeAdvantageResults += string
+   
         return f_pokemonString, s_pokemonString, typeAdvantageResults
 
 

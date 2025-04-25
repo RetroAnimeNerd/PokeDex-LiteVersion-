@@ -14,14 +14,14 @@ def loadImage(image_src):
 def runScript():
     try: 
         pokemon_name = entry.get()
-        pokemon_name, pokemon_id, height, weight, primaryType, secondaryType, imageData = m.getPokemonEntry(pokemon_name)
+        pokemon_name, pokemon_id, height, weight, primaryType, secondaryType, statString, baseStatTotal, imageData = m.getPokemonEntry(pokemon_name)
         advantage, disadvantage = m.checkTypeAdvantage(primaryType, secondaryType)
         photo = loadImage(imageData)
 
         global tk_img
         tk_img = ImageTk.PhotoImage(photo)
 
-        label_0.config(text=f"-------Pokedex Entry------\nPokeDex ID: {pokemon_id}\nPokemon Name: {pokemon_name}\nHeight: {height} meters\nWeight: {weight} pounds(lb)\nPrimary Type: {primaryType}\nSecondary Type: {secondaryType}\n", font=("Arial", 14))
+        label_0.config(text=f"-------Pokedex Entry------\nPokeDex ID: {pokemon_id}\nPokemon Name: {pokemon_name}\nHeight: {height} meters\nWeight: {weight} pounds(lb)\nPrimary Type: {primaryType}\nSecondary Type: {secondaryType}\n{statString}\nBase Stat Total: {baseStatTotal}", font=("Arial", 14))
         label_1.config(image=tk_img)
         label_2.config(text=advantage)
         label_3.config(text=disadvantage)
@@ -111,9 +111,6 @@ btn_submit = tk.Button(pokedex_container, text="Submit", command=runScript)
 btn_submit.pack()
 
 entry.bind('<Return>', lambda event: runScript())
-
-
-
 
 
 
