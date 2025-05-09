@@ -52,7 +52,7 @@ def compareThesePokemon():
 # Tkinter setup
 root = tk.Tk()
 root.title("PokeDex Lite")
-root.geometry("550x500")
+root.geometry("650x500")
 
 # Configure grid layout to center frames
 root.columnconfigure(0, weight=1)

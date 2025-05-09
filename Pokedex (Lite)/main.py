@@ -99,18 +99,31 @@ def checkTypeAdvantage(pokemonPrimaryType, pokemonSecondaryType):
 
     if pokemonPrimaryType or pokemonSecondaryType in type_disadvantage:
         for pokeType in type_disadvantage[pokemonPrimaryType]:
-            disadvantageList.append(pokeType)
+            if pokeType in disadvantageList:
+                continue
+            else:
+                disadvantageList.append(pokeType)
+
         if pokemonSecondaryType != 'None':
             for pokeType in type_disadvantage[pokemonSecondaryType]:
-                disadvantageList.append(pokeType)
+                if pokeType in disadvantageList:
+                    continue
+                else:
+                    disadvantageList.append(pokeType)
 
     if pokemonPrimaryType or pokemonSecondaryType in type_advantage:
         for pokeType in type_advantage[pokemonPrimaryType]:
-            advantageList.append(pokeType)
+            if pokeType in advantageList:
+                continue
+            else:
+                advantageList.append(pokeType)
         
         if pokemonSecondaryType != 'None': 
             for pokeType in type_advantage[pokemonSecondaryType]:
-                advantageList.append(pokeType)
+                if pokeType in advantageList:
+                    continue
+                else: 
+                    advantageList.append(pokeType)
 
     
     for a in advantageList:
@@ -119,7 +132,7 @@ def checkTypeAdvantage(pokemonPrimaryType, pokemonSecondaryType):
             a_string += f"{a}"
             break
         if a_count == a_length - 1 and a_length > 1:
-            a_string += f"and, {a}"
+            a_string += f"and {a}"
         else: 
             a_count += 1
             a_string += f"{a}, "
@@ -132,7 +145,7 @@ def checkTypeAdvantage(pokemonPrimaryType, pokemonSecondaryType):
             d_string += f"{d}"
             break
         if d_length > 1 and d_count == d_length - 1:
-            d_string += f"and, {d}"
+            d_string += f"and {d}"
         else:
             d_string += f"{d}, "
             d_count += 1
@@ -176,6 +189,8 @@ def comparePokemon(Pokemon1, Pokemon2):
             typeAdvantageResults += string
    
         return f_pokemonString, s_pokemonString, typeAdvantageResults
+    
+
 
 
     
